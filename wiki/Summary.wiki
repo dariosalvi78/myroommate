@@ -1,0 +1,17 @@
+#summary One-sentence summary of this page.
+#labels Featured
+
+= Introduction =
+
+A web application for sharing the expenses with your roommates.
+
+= Available languages =
+
+The php code is in english but the front end is only in spanish by now.
+
+= Used libraries =
+
+For the project I have used the following libraries:
+  * SimpleTest: http://simpletest.sourceforge.net/
+  * ReadBean: http://redbeanphp.com/
+  * DatePicker: http://www.frequency-decoder.com/2006/10/02/unobtrusive-date-picker-widgit-update
