@@ -7,15 +7,15 @@ A web application for sharing the expenses with your roommates.
 
 = Features =
 
-* Manage roommates, add new ones, close the ones who leave, suspend mates when they leave for short periods of time.
+ * Manage roommates, add new ones, close the ones who leave, suspend mates when they leave for short periods of time
 
-* Insert the expenses that you share with your mates and see them
+ * Insert the expenses that you share with your mates and see them
 
-* Register whenever you give money to some of your mate to close the debt
+ * Register whenever you give money to some of your mate to close the debt
 
-* Register the bills of the house
+ * Register the bills of the house
 
-* View the situation of the debts, balanced with what has been spent and what has been paid back
+ * View the situation of the debts, balanced with what has been spent and what has been paid back
 
 
 = Installation =
