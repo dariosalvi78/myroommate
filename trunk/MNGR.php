@@ -14,7 +14,7 @@ try {
 //init DB
 R::exec("CREATE TABLE IF NOT EXISTS mate (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(50) );", null);
 R::exec("CREATE TABLE IF NOT EXISTS statuslog (id INT PRIMARY KEY AUTO_INCREMENT, status VARCHAR(50), startTimestamp DATETIME, endTimestamp DATETIME, comment VARCHAR(255) );", null);
-R::exec("CREATE TABLE IF NOT EXISTS expense (id INT PRIMARY KEY AUTO_INCREMENT, fromWho VARCHAR(50), type VARCHAR(50), comment VARCHAR(255), timestamp DATETIME );", null);
+R::exec("CREATE TABLE IF NOT EXISTS expense (id INT PRIMARY KEY AUTO_INCREMENT, amount FLOAT, fromWho VARCHAR(50), type VARCHAR(50), comment VARCHAR(255), timestamp DATETIME );", null);
 R::exec("CREATE TABLE IF NOT EXISTS expense_mate (id INT PRIMARY KEY AUTO_INCREMENT, mate_id INT, expense_id INT, ".
 		"FOREIGN KEY (mate_id) ".
         "REFERENCES mate(id) ".
