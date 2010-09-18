@@ -8,10 +8,14 @@
 	<td>Cuantía</td>
 	<td>Pagado por</td>
 	<td>Comentario</td>
+	<td>Tipo recibo</td>
+	<td>Emisión</td>
+	<td>Desde</td>
+	<td>Hasta</td>
 </tr>
 <?php
 
-$expenses = getExpenses(null);
+$expenses = getExpensesAndBills();
 foreach($expenses as $expense)
 {
 	echo'<tr>';
@@ -20,7 +24,17 @@ foreach($expenses as $expense)
 	echo'<td>'.$expense->amount.'</td>';
 	echo'<td>'.$expense->fromWho.'</td>';
 	echo'<td>'.$expense->comment.'</td>';
+	if($expense->billType != null)
+	{
+		echo'<td>'.$expense->billType.'</td>';
+		echo'<td>'.$expense->emissionDate.'</td>';
+		echo'<td>'.$expense->fromDate.'</td>';
+		echo'<td>'.$expense->toDate.'</td>';
+	}
+	else 
+	echo '<td colspan="4"></td>';
 	echo'</tr>';
+	
 }
 
 ?>

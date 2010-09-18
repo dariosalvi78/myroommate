@@ -208,6 +208,16 @@ function getExpenseMates($expenseId)
 	return $mates;
 }
 
+function parseDate($date)
+{
+	list($day,$month,$year) = explode("/", $date);
+	if(!checkdate($month, $day, $year))
+	throw new Exception("The date ".$date." is not valid", null);
+
+	$retval = $year.'-'.$month.'-'.$day;
+	return $retval;
+}
+
 function addBill($matename ,$amount, $type, $comment, $matesnames, $billType, $emissionDate, $fromDate, $toDate)
 {
 	$id = addExpense($matename ,$amount, $type, $comment, $matesnames);
@@ -249,6 +259,32 @@ function getBills($matename)
 		array_push($bills, $bill);
 	}
 
+	return $bills;
+}
+
+function getExpensesAndBills()
+{
+	$query = "SELECT * FROM expense LEFT JOIN bill ON expense.id = bill.expense_id ORDER BY timestamp DESC;";
+	$expensesTable = R::getAll($query);
+
+	$bills = array();
+	foreach($expensesTable as $expenseRow)
+	{
+		$bill->fromWho = $expenseRow['fromWho'];
+		$bill->amount = $expenseRow['amount'];
+		$bill->type = $expenseRow['type'];
+		$bill->comment = $expenseRow['comment'];
+		$bill->timestamp = $expenseRow['timestamp'];
+		$bill->billType = $expenseRow['billType'];
+		$bill->fromDate = $expenseRow['fromDate'];
+		$bill->toDate = $expenseRow['toDate'];
+		$bill->emissionDate = $expenseRow['emissionDate'];
+		
+		array_push($bills, $bill);
+		unset($bill);
+	}
+
+		
 	return $bills;
 }
 
