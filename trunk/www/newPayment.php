@@ -14,6 +14,7 @@ else {
 
 <form name="paymentForm" action="index.php?section=newPayment"
 	method="post">
+	<p>Los decimales van con el punto!! (ej: 30.5 euros)</p>
 <table id="paymentTable" border="1">
 	<tr>
 		<td>Desde</td>

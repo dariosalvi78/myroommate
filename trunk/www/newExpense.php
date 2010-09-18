@@ -14,7 +14,7 @@ if(isset($_POST['newExpense']))
 
 	if(isset($_POST['isBill']) && $_POST['isBill']== true)
 	{
-		addBill($_POST['mate'] ,$_POST['amount'], $_POST['type'], $_POST['comment'], $matesnames, $_POST['billType'], $_POST['emissionDate'], $_POST['fromDate'], $_POST['toDate']);
+		addBill($_POST['mate'] ,$_POST['amount'], $_POST['type'], $_POST['comment'], $matesnames, $_POST['billType'], parseDate($_POST['emissionDate']), parseDate($_POST['fromDate']), parseDate($_POST['toDate']));
 	}
 	else
 	{
@@ -28,6 +28,7 @@ else {
 
 <form name="expenseForm" action="index.php?section=newExpense"
 	method="post">
+	<p>Los decimales van con el punto!! (ej: 30.5 euros)</p>
 <table id="expenseTable" border="1">
 	<tr>
 		<td>Pagado por</td>
