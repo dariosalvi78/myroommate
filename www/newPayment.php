@@ -25,10 +25,10 @@ else {
 	<tr>
 		<td><select name="fromWho" id="fromWho">
 		<?php
-		$activemates = getMates("ACTIVE");
+		$allmates = getMates(NULL);
 		$firstmate = current($activemates);
 
-		foreach ($activemates as $mate)
+		foreach ($allmates as $mate)
 		{
 			echo'<option value="'.$mate->name.'">'.$mate->name.'</option>';
 		}
