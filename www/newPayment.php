@@ -19,7 +19,7 @@ else {
 	<tr>
 		<td>Desde</td>
 		<td>A</td>
-		<td>Cuantía</td>
+		<td>Importe</td>
 		<td>Comentario</td>
 	</tr>
 	<tr>
