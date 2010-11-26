@@ -50,7 +50,14 @@ else {
 		}
 		?>
 		</select></td>
-		<td><input type="text" name="type" /></td>
+		<td>
+		<select name="type">
+		<option value= "Compra">Compra</option>
+		<option value= "Recibo">Recibo</option>
+		<option value= "Garage">Garage</option>
+		<option value= "Otro">Otro</option>
+		</select>
+		</td>
 		<td><input type="text" name="amount" /></td>
 		<td><input type="text" name="comment" /></td>
 		<td id="toMates"><?php 
@@ -73,7 +80,15 @@ else {
 		<td>Hasta</td>
 	</tr>
 	<tr>
-		<td><input type="text" name="billType"/></td>
+		<td>
+		<select name="billType">
+		<option value= "Luz">Luz</option>
+		<option value= "Gas">Gas</option>
+		<option value= "Telefono/Internet">Telefono/Internet</option>
+		<option value= "Comunidad">Comunidad</option>
+		<option value= "Otro">Otro</option>
+		</select>
+		</td>
 		<td><input type="text" class="w8em format-d-m-y divider-slash"
 			id="emissionDate" name="emissionDate" value="09/09/2010"
 			maxlength="10" /></td>
