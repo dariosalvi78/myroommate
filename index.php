@@ -12,10 +12,10 @@
 	<tr>
 		<td><a href="index.php?section=situation">Situación</a></td>
 		<td><a href="index.php?section=newExpense">Añadir gasto</a></td>
-		<td><a href="index.php?section=newPayment">Añadir devolución</a></td>
-		<td><a href="index.php?section=see">Ver gastos y pagos</a></td>
+		<td><a href="index.php?section=newPayment">Añadir Ingreso</a></td>
+		<td><a href="index.php?section=see">Ver gastos e ingresos</a></td>
 		<td><a href="index.php?section=adminMates">Administración compañeros</a></td>
-	</tr>
+	</tr> 
 </table>
 <?php
 require_once('MNGR.php');

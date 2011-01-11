@@ -1,4 +1,4 @@
-<h2>Nueva devolución</h2>
+<h2>Nuevo ingreso</h2>
 
 <?php
 
