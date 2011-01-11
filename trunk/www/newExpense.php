@@ -61,7 +61,7 @@ else {
 		<td><input type="text" name="amount" /></td>
 		<td><input type="text" name="comment" /></td>
 		<td id="toMates"><?php 
-		$allmates = getMates(NULL);
+		$allmates = getMates("ACTIVE");
 		foreach ($allmates as $mate)
 		{
 			if($mate->name != $firstmate->name)
