@@ -26,7 +26,7 @@ R::exec("CREATE TABLE IF NOT EXISTS expense_mate (id INT PRIMARY KEY AUTO_INCREM
         "REFERENCES expense(id) ".
 		"ON UPDATE CASCADE ON DELETE CASCADE".
 		");", null);
-R::exec("CREATE TABLE IF NOT EXISTS payment (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(50), amount FLOAT, fromWho VARCHAR(50), toWho VARCHAR(50) );");
+R::exec("CREATE TABLE IF NOT EXISTS payment (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(50), amount FLOAT, fromWho VARCHAR(50), toWho VARCHAR(50), timestamp DATETIME );");
 R::exec("CREATE TABLE IF NOT EXISTS bill (id INT PRIMARY KEY AUTO_INCREMENT, billType VARCHAR(50), emissionDate DATE, fromDate DATE, toDate DATE, expense_id INT, ".
 		"FOREIGN KEY (expense_id) ".
         "REFERENCES expense(id) ".
@@ -38,8 +38,10 @@ R::exec("CREATE TABLE IF NOT EXISTS bill (id INT PRIMARY KEY AUTO_INCREMENT, bil
 $GLOBALS['debug'] = false;
 
 if($GLOBALS['debug'])
-R::$adapter->getDatabase()->setDebugMode(true);
-
+{
+	R::$adapter->getDatabase()->setDebugMode(true);
+	ini_set('display_errors', 'On');
+}
 
 function addNewMate($name, $comment)
 {
@@ -74,7 +76,7 @@ function getMate($name)
 function getMates($status)
 {
 	if($status == NULL){
-		$keys = R::$adapter->getCol("SELECT mate.id FROM mate ", NULL);
+		$keys = R::$adapter->getCol("SELECT mate.id FROM mate;", NULL);
 	}
 	else {
 		$keys = R::$adapter->getCol("SELECT mate.id FROM mate JOIN statuslog ON mate.id = statuslog.mate_id WHERE statuslog.endTimestamp IS NULL AND statuslog.status = ? ", array($status) );
@@ -282,12 +284,12 @@ function getExpensesAndBills()
 		$bill->fromDate = $expenseRow['fromDate'];
 		$bill->toDate = $expenseRow['toDate'];
 		$bill->emissionDate = $expenseRow['emissionDate'];
-		
+
 		array_push($bills, $bill);
 		unset($bill);
 	}
 
-		
+
 	return $bills;
 }
 
