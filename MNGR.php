@@ -13,7 +13,10 @@ try {
 
 //init DB
 R::exec("CREATE TABLE IF NOT EXISTS mate (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(50) );", null);
-R::exec("CREATE TABLE IF NOT EXISTS statuslog (id INT PRIMARY KEY AUTO_INCREMENT, status VARCHAR(50), startTimestamp DATETIME, endTimestamp DATETIME, comment VARCHAR(255) );", null);
+R::exec("CREATE TABLE IF NOT EXISTS statuslog (id INT PRIMARY KEY AUTO_INCREMENT, mate_id INT, status VARCHAR(50), startTimestamp DATETIME, endTimestamp DATETIME, comment VARCHAR(255), ".
+		"FOREIGN KEY (mate_id) ".
+        "REFERENCES mate(id) ".
+		"ON UPDATE CASCADE ON DELETE CASCADE );", null);
 R::exec("CREATE TABLE IF NOT EXISTS expense (id INT PRIMARY KEY AUTO_INCREMENT, amount FLOAT, fromWho VARCHAR(50), type VARCHAR(50), comment VARCHAR(255), timestamp DATETIME );", null);
 R::exec("CREATE TABLE IF NOT EXISTS expense_mate (id INT PRIMARY KEY AUTO_INCREMENT, mate_id INT, expense_id INT, ".
 		"FOREIGN KEY (mate_id) ".
@@ -23,7 +26,7 @@ R::exec("CREATE TABLE IF NOT EXISTS expense_mate (id INT PRIMARY KEY AUTO_INCREM
         "REFERENCES expense(id) ".
 		"ON UPDATE CASCADE ON DELETE CASCADE".
 		");", null);
-R::exec("CREATE TABLE IF NOT EXISTS payment (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(50) );");
+R::exec("CREATE TABLE IF NOT EXISTS payment (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(50), amount FLOAT, fromWho VARCHAR(50), toWho VARCHAR(50) );");
 R::exec("CREATE TABLE IF NOT EXISTS bill (id INT PRIMARY KEY AUTO_INCREMENT, billType VARCHAR(50), emissionDate DATE, fromDate DATE, toDate DATE, expense_id INT, ".
 		"FOREIGN KEY (expense_id) ".
         "REFERENCES expense(id) ".
