@@ -2,6 +2,31 @@
 
 <h2>Nuevo gasto</h2>
 
+<table border="1">
+	<tr>
+		<td><a href="index.php?section=newExpense&mates=active">Compañeros
+		activos</a></td>
+		<td><a href="index.php?section=newExpense&mates=all">También
+		compañeros antiguos</a></td>
+	</tr>
+</table>
+
+<?php
+	function whichMates()
+	{
+		if(isset($_GET['mates']))
+		{
+			if($_GET['mates']=="ACTIVE")
+			return getMates("ACTIVE");
+			else if($_GET['mates']=="all")
+			return getMates(NULL);
+			else //default
+			return getMates("ACTIVE");
+		}
+		else //default
+		return getMates("ACTIVE");
+	}
+?>
 
 <?php
 
@@ -41,10 +66,10 @@ else {
 	<tr>
 		<td><select id="fromMate" name="mate">
 		<?php
-		$activemates = getMates("ACTIVE");
-		$firstmate = current($activemates);
+		$mates = whichMates();
+		$firstmate = current($mates);
 
-		foreach ($activemates as $mate)
+		foreach ($mates as $mate)
 		{
 			echo'<option value="'.$mate->name.'">'.$mate->name.'</option>';
 		}
@@ -61,8 +86,8 @@ else {
 		<td><input type="text" name="amount" /></td>
 		<td><input type="text" name="comment" /></td>
 		<td id="toMates"><?php 
-		$allmates = getMates("ACTIVE");
-		foreach ($allmates as $mate)
+		$mates = whichMates();
+		foreach ($mates as $mate)
 		{
 			if($mate->name != $firstmate->name)
 			echo'<input type="checkbox" name= "mates[]" value = "'.$mate->name.'">'.$mate->name.'';
@@ -111,8 +136,8 @@ var chosenoption=this.options[this.selectedIndex];
  var cell = document.createElement("td");
  cell.setAttribute("id", "toMates");
 <?php 
-$allmates = getMates(NULL);
-foreach ($allmates as $mate)
+$mates = whichMates();
+foreach ($mates as $mate)
 {
 	echo'var chkbox = document.createElement(\'input\');   
 		 chkbox.type = "checkbox";

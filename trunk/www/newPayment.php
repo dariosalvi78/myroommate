@@ -10,11 +10,37 @@ if(isset($_POST['newPayment']))
 	echo'pulsa <a href="index.php">aquí</a> para volver a la home';
 }
 else {
+	?>
+
+<table border="1">
+	<tr>
+		<td><a href="index.php?section=newPayment&mates=active">Compañeros
+		activos</a></td>
+		<td><a href="index.php?section=newPayment&mates=all">También
+		compañeros antiguos</a></td>
+	</tr>
+</table>
+
+<?php
+	function whichMates()
+	{
+		if(isset($_GET['mates']))
+		{
+			if($_GET['mates']=="ACTIVE")
+			return getMates("ACTIVE");
+			else if($_GET['mates']=="all")
+			return getMates(NULL);
+			else //default
+			return getMates("ACTIVE");
+		}
+		else //default
+		return getMates("ACTIVE");
+	}
 ?>
 
 <form name="paymentForm" action="index.php?section=newPayment"
 	method="post">
-	<p>Los decimales van con el punto!! (ej: 30.5 euros)</p>
+<p>Los decimales van con el punto!! (ej: 30.5 euros)</p>
 <table id="paymentTable" border="1">
 	<tr>
 		<td>Desde</td>
@@ -25,19 +51,22 @@ else {
 	<tr>
 		<td><select name="fromWho" id="fromWho">
 		<?php
-		$allmates = getMates(NULL);
-		$firstmate = current($activemates);
+		$mates = whichMates();
+			
+		$firstmate = current($mates);
 
-		foreach ($allmates as $mate)
+		foreach ($mates as $mate)
 		{
 			echo'<option value="'.$mate->name.'">'.$mate->name.'</option>';
 		}
 		?>
+
 		</select></td>
 		<td><select name="toWho" id="toWho">
 		<?php
-		$allmates = getMates(NULL);
-		foreach ($allmates as $mate)
+		$mates = whichMates();
+		
+		foreach ($mates as $mate)
 		{
 			if($mate->name != $firstmate->name)
 			echo'<option value="'.$mate->name.'">'.$mate->name.'</option>';
@@ -65,8 +94,8 @@ var chosenoption=this.options[this.selectedIndex];
  }
  //create a new select
 <?php 
-$allmates = getMates(NULL);
-foreach ($allmates as $mate)
+$mates = whichMates();
+foreach ($mates as $mate)
 {
 	echo'if(chosenoption.value != "'.$mate->name.'")
 	{ toWho.add(new Option("'.$mate->name.'", "'.$mate->name.'"), null); }
