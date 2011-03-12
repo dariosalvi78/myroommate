@@ -1,5 +1,7 @@
 <h2>Ver gastos y pagos</h2>
 
+<p><a href="www/exportExcel.php">Exportar a Excel</a></p>
+
 <p>Gastos:</p>
 <table border="1">
 <tr>
@@ -40,7 +42,7 @@ foreach($expenses as $expense)
 ?>
 </table>
 
-<p>Devoluciones:</p>
+<p>Ingresos:</p>
 <table border="1">
 <tr>
 	<td>Fecha</td>
