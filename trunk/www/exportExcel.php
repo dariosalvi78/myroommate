@@ -6,71 +6,104 @@ header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 header("Content-Type: application/force-download");
 header("Content-Type: application/octet-stream");
 header("Content-Type: application/download");;
-header("Content-Disposition: attachment;filename=myroommate.xls ");
+header("Content-Disposition: attachment;filename=myroommate.xlsx");
 header("Content-Transfer-Encoding: binary ");
 
-require_once('../libs/excel.php');
+require_once('../libs/phpExcel/PHPExcel.php');
+
+
 require_once('../MNGR.php');
 
+function setNiceText($sheet, $col, $row, $Text, $color)
+{
+	$objRichText = new PHPExcel_RichText();
+	$objPayable = $objRichText->createTextRun($Text);
+	$objPayable->getFont()->setBold(true);
+	if($color == "red")
+	$objPayable->getFont()->setColor( new PHPExcel_Style_Color( PHPExcel_Style_Color::COLOR_RED ) );
+	if($color == "green")
+	$objPayable->getFont()->setColor( new PHPExcel_Style_Color( PHPExcel_Style_Color::COLOR_GREEN ) );
+	if($color == "darkred")
+	$objPayable->getFont()->setColor( new PHPExcel_Style_Color( PHPExcel_Style_Color::COLOR_DARKRED ) );
+	if($color == "darkgreen")
+	$objPayable->getFont()->setColor( new PHPExcel_Style_Color( PHPExcel_Style_Color::COLOR_DARKGREEN) );
 
-$row = 0;
-xlsBOF();
-xlsWriteLabel($row,0,"-----Gastos");
+	$sheet->setCellValueByColumnAndRow($col, $row, $objRichText);
+}
+
+
+$objPHPExcel = new PHPExcel();
+
+$expensesSheet = $objPHPExcel->getActiveSheet();
+$expensesSheet->setTitle("Gastos");
+
+$row = 1;
+
+setNiceText($expensesSheet, 0, $row, "Gastos", "red");
 $row++;
-xlsWriteLabel($row,0,"Fecha");
-xlsWriteLabel($row,1,"Tipo");
-xlsWriteLabel($row,2,"Cuantia");
-xlsWriteLabel($row,3,"Pagado por");
-xlsWriteLabel($row,4,"Comentario");
-xlsWriteLabel($row,5,"Tipo recibo");
-xlsWriteLabel($row,6,"Emision");
-xlsWriteLabel($row,7,"Desde");
-xlsWriteLabel($row,8,"Hasta");
+
+setNiceText($expensesSheet, 0, $row, "Fecha", NULL);
+setNiceText($expensesSheet,1, $row,"Tipo", NULL);
+setNiceText($expensesSheet,2, $row,"Cuantia", NULL);
+setNiceText($expensesSheet,3, $row,"Pagado por", NULL);
+setNiceText($expensesSheet,4, $row,"Comentario", NULL);
+setNiceText($expensesSheet,5, $row,"Tipo recibo", NULL);
+setNiceText($expensesSheet,6, $row,"Emision", NULL);
+setNiceText($expensesSheet,7, $row,"Desde", NULL);
+setNiceText($expensesSheet,8, $row,"Hasta", NULL);
 $row++;
 
 $expenses = getExpensesAndBills();
 foreach($expenses as $expense)
 {
-	xlsWriteLabel($row,0,$expense->timestamp);
-	xlsWriteLabel($row,1,$expense->type);
-	xlsWriteNumber($row,2,$expense->amount);
-	xlsWriteLabel($row,3,$expense->fromWho);
-	xlsWriteLabel($row,4,$expense->comment);
-	
+	$expensesSheet->setCellValueByColumnAndRow(0, $row,$expense->timestamp);
+	$expensesSheet->setCellValueByColumnAndRow(1, $row,$expense->type);
+	$expensesSheet->setCellValueByColumnAndRow(2, $row,$expense->amount);
+	$expensesSheet->setCellValueByColumnAndRow(3, $row,$expense->fromWho);
+	$expensesSheet->setCellValueByColumnAndRow(4, $row,$expense->comment);
+
+
 	if($expense->billType != null)
 	{
-		xlsWriteLabel($row,5,$expense->billType);
-		xlsWriteLabel($row,6,$expense->emissionDate);
-		xlsWriteLabel($row,7,$expense->fromDate);
-		xlsWriteLabel($row,8,$expense->toDate);
+		$expensesSheet->setCellValueByColumnAndRow(5, $row,$expense->billType);
+		$expensesSheet->setCellValueByColumnAndRow(6, $row,$expense->emissionDate);
+		$expensesSheet->setCellValueByColumnAndRow(7, $row,$expense->fromDate);
+		$expensesSheet->setCellValueByColumnAndRow(8, $row,$expense->toDate);
 	}
 	$row++;
 }
 
+$row = 1;
+
+$paymentsSheet = $objPHPExcel->createSheet(1);
+$paymentsSheet->setTitle("Ingresos");
+
+setNiceText($paymentsSheet,0, $row,"Ingresos", "green");
 
 $row++;
-$row++;
-xlsWriteLabel($row,0,"-----Ingresos");
-$row++;
-xlsWriteLabel($row,0,"Fecha");
-xlsWriteLabel($row,1,"Cuantia");
-xlsWriteLabel($row,2,"De");
-xlsWriteLabel($row,3,"A");
-xlsWriteLabel($row,4,"Comentario");
+setNiceText($paymentsSheet,0, $row,"Fecha", NULL);
+setNiceText($paymentsSheet,1, $row,"Cuantia", NULL);
+setNiceText($paymentsSheet,2, $row,"De", NULL);
+setNiceText($paymentsSheet,3, $row,"A", NULL);
+setNiceText($paymentsSheet,4, $row,"Comentario", NULL);
 $row++;
 
 $payments = getPayments(null);
 foreach($payments as $payment)
 {
-	xlsWriteLabel($row,0,$payment->timestamp);
-	xlsWriteNumber($row,1,$payment->amount);
-	xlsWriteLabel($row,2,$payment->fromWho);
-	xlsWriteLabel($row,3,$payment->toWho);
-	xlsWriteLabel($row,4,$payment->comment);
+	$paymentsSheet->setCellValueByColumnAndRow(0, $row,$payment->timestamp);
+	$paymentsSheet->setCellValueByColumnAndRow(1, $row,$payment->amount);
+	$paymentsSheet->setCellValueByColumnAndRow(2, $row,$payment->fromWho);
+	$paymentsSheet->setCellValueByColumnAndRow(3, $row,$payment->toWho);
+	$paymentsSheet->setCellValueByColumnAndRow(4, $row,$payment->comment);
+
 	$row++;
 }
 
-xlsEOF();
-exit();
+PHPExcel_Settings::setZipClass(PHPExcel_Settings::PCLZIP);
+$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+$objWriter->save('php://output');
 
+$objPHPExcel->disconnectWorksheets();
+unset($objPHPExcel);
 ?>
