@@ -6,7 +6,7 @@ header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 header("Content-Type: application/force-download");
 header("Content-Type: application/octet-stream");
 header("Content-Type: application/download");;
-header("Content-Disposition: attachment;filename=test.xls ");
+header("Content-Disposition: attachment;filename=myroommate.xls ");
 header("Content-Transfer-Encoding: binary ");
 
 require_once('../libs/excel.php');
@@ -63,7 +63,7 @@ $payments = getPayments(null);
 foreach($payments as $payment)
 {
 	xlsWriteLabel($row,0,$payment->timestamp);
-	xlsWritenUMBER($row,1,$payment->amount);
+	xlsWriteNumber($row,1,$payment->amount);
 	xlsWriteLabel($row,2,$payment->fromWho);
 	xlsWriteLabel($row,3,$payment->toWho);
 	xlsWriteLabel($row,4,$payment->comment);
