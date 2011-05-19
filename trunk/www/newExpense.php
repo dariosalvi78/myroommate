@@ -109,6 +109,7 @@ else {
 		<select name="billType">
 		<option value= "Luz">Luz</option>
 		<option value= "Gas">Gas</option>
+		<option value= "Agua">Agua</option>
 		<option value= "Telefono/Internet">Telefono/Internet</option>
 		<option value= "Comunidad">Comunidad</option>
 		<option value= "Otro">Otro</option>
@@ -118,9 +119,9 @@ else {
 			id="emissionDate" name="emissionDate" value="09/09/2010"
 			maxlength="10" /></td>
 		<td><input type="text" class="w8em format-d-m-y divider-slash"
-			id="fromDate" name="fromDate" value="09/09/2010" maxlength="10" /></td>
+			id="fromDate" name="fromDate"  maxlength="10" /></td>
 		<td><input type="text" class="w8em format-d-m-y divider-slash"
-			id="toDate" name="toDate" value="09/09/2010" maxlength="10" /></td>
+			id="toDate" name="toDate"  maxlength="10" /></td>
 	</tr>
 </table>
 <input type="submit" name="newExpense" value="Hecho" /></form>
